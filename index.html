@@ -502,5 +502,38 @@ function clearFilters() {
 }
 </script>
 
+<script>
+/* Convert restaurant names into Google Maps links */
+document.addEventListener("DOMContentLoaded", function () {
+
+    const rows = document.querySelectorAll("tbody tr");
+
+    rows.forEach(row => {
+
+        const nameCell = row.cells[0];
+        const address = row.cells[1].innerText;
+        const city = row.cells[2].innerText;
+        const state = row.cells[3].innerText;
+
+        const fullAddress = `${address}, ${city}, ${state}`;
+
+        const mapsUrl =
+            "https://www.google.com/maps/search/?api=1&query=" +
+            encodeURIComponent(fullAddress);
+
+        const name = nameCell.innerText;
+
+        nameCell.innerHTML = `
+            <a href="${mapsUrl}" target="_blank" rel="noopener noreferrer">
+                ${name}
+            </a>
+        `;
+
+    });
+
+});
+</script>
+	
+
 </body>
 </html>
