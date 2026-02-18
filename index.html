@@ -200,6 +200,40 @@
         <a href="mailto:sushiwithoutmirin@gmail.com">sushiwithoutmirin@gmail.com</a>
     </p>
 
+	<div class="filters" style="margin-top:25px; text-align:center;">
+
+    <label>
+        City:
+        <input type="text" id="filterCity" placeholder="Orlando">
+    </label>
+
+    &nbsp;&nbsp;
+
+    <label>
+        State:
+        <input type="text" id="filterState" placeholder="FL" maxlength="2">
+    </label>
+
+    &nbsp;&nbsp;
+
+    <label>
+        Uses Mirin:
+        <select id="filterMirin">
+            <option value="">All</option>
+            <option value="No">No</option>
+            <option value="Yes">Yes</option>
+            <option value="Unknown">Unknown</option>
+        </select>
+    </label>
+
+    &nbsp;&nbsp;
+
+    <button onclick="filterTable()">Filter</button>
+
+    <button onclick="clearFilters()">Clear</button>
+
+</div>
+	
     <div class="table-wrapper">
 
         <table>
@@ -431,6 +465,42 @@ Help us grow the list!
     <button type="submit">Submit Restaurant</button>
 
 </form>
+
+<script>
+function filterTable() {
+
+    const city = document.getElementById("filterCity").value.toLowerCase();
+    const state = document.getElementById("filterState").value.toUpperCase();
+    const mirin = document.getElementById("filterMirin").value;
+
+    const rows = document.querySelectorAll("tbody tr");
+
+    rows.forEach(row => {
+
+        const cityCell = row.cells[2].innerText.toLowerCase();
+        const stateCell = row.cells[3].innerText.toUpperCase();
+        const mirinCell = row.cells[4].innerText;
+
+        let show = true;
+
+        if (city && !cityCell.includes(city)) show = false;
+        if (state && stateCell !== state) show = false;
+        if (mirin && mirinCell !== mirin) show = false;
+
+        row.style.display = show ? "" : "none";
+
+    });
+}
+
+function clearFilters() {
+
+    document.getElementById("filterCity").value = "";
+    document.getElementById("filterState").value = "";
+    document.getElementById("filterMirin").value = "";
+
+    filterTable();
+}
+</script>
 
 </body>
 </html>
